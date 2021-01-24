@@ -2,17 +2,15 @@ import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Surface } from 'react-native-paper'
-import Login from "./screens/Login"
+import LoginScreen from "./screens/LoginScreen"
 
 
 export default function App() {
   return (
     <Surface style={styles.container}>
-      <Login />
-      <Text>
-        Hello
-      </Text>
-      <StatusBar style="auto" />
+      <LoginScreen />
+
+      <StatusBar hidden={true} />
     </Surface>
   );
 }
