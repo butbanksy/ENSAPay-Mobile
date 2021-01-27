@@ -1,13 +1,18 @@
 
 import React from 'react'
+import { useDispatch } from "react-redux"
 import { Surface, Text, Title, Caption, Paragraph, Drawer, TouchableRipple, useTheme } from "react-native-paper"
 import { StyleSheet, View, ImageBackground, Dimensions } from 'react-native'
 import { DrawerContentScrollView, DrawerItem, DrawerContent } from '@react-navigation/drawer'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
+import { logout } from '../../utils/loginApi'
 
 const { width, height } = Dimensions.get('window');
 
 export default function CustomDrawer(props) {
+
+    const dispatch = useDispatch();
+
     return (
         <DrawerContentScrollView scrollEnabled={false} {...props} >
             <ImageBackground source={require("../../assets/images/login_background.png")} style={styles.image} resizeMode="cover">
@@ -59,7 +64,7 @@ export default function CustomDrawer(props) {
                             )}
                             label="Se déconnecter"
                             labelStyle={styles.drawerLabel}
-                            onPress={() => { props.navigation.navigate('Login') }}
+                            onPress={() => { dispatch(logout())}}
                         />
                     </Drawer.Section>
                 </Surface>
@@ -133,8 +138,8 @@ const styles = StyleSheet.create({
     },
     image: {
         width,
-        height: height + width/10,
-        marginTop: -width/10
+        height: height + width / 10,
+        marginTop: -width / 10
     },
     background: {
         flex: 1,

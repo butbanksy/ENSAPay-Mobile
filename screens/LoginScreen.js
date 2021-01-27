@@ -1,8 +1,10 @@
 import React, { useState } from "react"
+import { useSelector, useDispatch } from "react-redux"
 import { StyleSheet, View, ImageBackground, Dimensions } from "react-native";
 import { Surface, Text, TextInput, TextInputMask, Button, useTheme, DefaultTheme, Provider } from 'react-native-paper'
 import ContainedButton from "../components/buttons/ContainedButton"
 import TextButton from "../components/buttons/TextButton"
+import { login } from "../utils/loginApi";
 
 export default function LoginScreen() {
 
@@ -11,6 +13,13 @@ export default function LoginScreen() {
             placeholder: 'white', text: 'white', primary: 'white',
             underlineColor: 'transparent', background: '#003489'
         }
+    }
+
+    const dispatch = useDispatch();
+    const authSlice = useSelector(state => state.auth);
+
+    const handleSubmit = () => {
+        dispatch(login())
     }
 
     const [accountNumber, setAccountNumber] = useState("");
@@ -100,8 +109,8 @@ export default function LoginScreen() {
                             onChangeText={password => setPassword(password)}
                             right={<TextInput.Icon size={18} color="white" name="eye" onPress={changePasswordVisibility} />}
                         />
-                        <ContainedButton color="white" text="Se connecter" />
-                            <TextButton text="Mot de passe oublié?" />
+                        <ContainedButton color="white" text="Se connecter" onPress={handleSubmit} loading={authSlice.loading} />
+                        <TextButton text="Mot de passe oublié?" />
                     </Surface>
                 </Surface>
             </ImageBackground>
