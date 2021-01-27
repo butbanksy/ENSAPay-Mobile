@@ -1,6 +1,8 @@
 import React, { useState } from "react"
 import { StyleSheet, View, ImageBackground, Dimensions } from "react-native";
 import { Surface, Text, TextInput, TextInputMask, Button, useTheme, DefaultTheme, Provider } from 'react-native-paper'
+import ContainedButton from "../components/buttons/ContainedButton"
+import TextButton from "../components/buttons/TextButton"
 
 export default function LoginScreen() {
 
@@ -67,9 +69,7 @@ export default function LoginScreen() {
             marginRight: 25,
             marginLeft: 25,
             fontSize: 15,
-        },
-        buttonLabel: { color: colors.primary, fontFamily: "Roboto_300Light", fontSize: 17 }
-
+        }
     })
 
     return (
@@ -100,31 +100,12 @@ export default function LoginScreen() {
                             onChangeText={password => setPassword(password)}
                             right={<TextInput.Icon size={18} color="white" name="eye" onPress={changePasswordVisibility} />}
                         />
-                        <Button mode="contained"
-                            uppercase={false}
-                            style={{ margin: 25 }}
-                            contentStyle={{ backgroundColor: "white" }}
-                            labelStyle={styles.buttonLabel}
-                            onPress={() => {
-                                console.log(accountNumber + password)
-                            }}
-                        >
-                            Se connecter
-                        </Button>
-                        <Button mode="text"
-                            uppercase={false}
-                            style={{ margin: 25 }}
-                            labelStyle={[styles.buttonLabel, { color: "white", fontFamily: "Roboto_400Regular", fontSize: 14 }]}
-                            onPress={() => {
-                                console.log(accountNumber + password)
-                            }}
-                        >
-                            Mot de passe oublié?
-                        </Button>
+                        <ContainedButton color="white" text="Se connecter" />
+                            <TextButton text="Mot de passe oublié?" />
                     </Surface>
                 </Surface>
             </ImageBackground>
-        </Surface>
+        </Surface >
     )
 }
 

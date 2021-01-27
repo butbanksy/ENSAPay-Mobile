@@ -1,9 +1,9 @@
 import React from "react"
+import { Provider } from 'react-redux'
 import { ActivityIndicator } from "react-native"
 import { configureFonts, DefaultTheme, DarkTheme, Provider as PaperProvider } from "react-native-paper";
 import { NavigationContainer } from '@react-navigation/native';
-
-
+import store from "./redux/store"
 import App from './App'
 import {
     Roboto_100Thin,
@@ -20,7 +20,9 @@ import {
     Roboto_900Black_Italic,
     useFonts
 } from '@expo-google-fonts/roboto'
-import DrawerNavigator from "./screens/DrawerNavigator";
+import DrawerNavigator from "./navigation/DrawerNavigator";
+
+
 
 const theme = {
     ...DefaultTheme,
@@ -67,10 +69,10 @@ export default function Main() {
     }
 
     return (
-        <PaperProvider theme={theme}>
-            <NavigationContainer>
+        <Provider store={store}>
+            <PaperProvider theme={theme}>
                 <App />
-            </NavigationContainer>
-        </PaperProvider>
+            </PaperProvider>
+        </Provider>
     )
 }
