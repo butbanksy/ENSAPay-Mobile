@@ -8,7 +8,7 @@ export const loadServices = () => {
         dispatch(servicesRequest());
         setTimeout(() => {
             dispatch(servicesRequestSuccess(services))
-        }, 5000);
+        }, 1000);
     }
 }
 

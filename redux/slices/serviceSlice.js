@@ -4,8 +4,8 @@ const initialState = {
     services: [],
     selectedServiceName: "",
     selectedServiceImage: "",
-    error: "",
     loading: false,
+    error: "",
 }
 
 const authSlice = createSlice({
