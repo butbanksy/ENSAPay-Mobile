@@ -5,24 +5,47 @@ import { Surface, Text } from "react-native-paper";
 import Header from "./../../components/common/Header";
 import ContainedButton from "./../../components/buttons/ContainedButton";
 import { useNavigation } from "@react-navigation/native";
+import axios from "axios";
 
 const { width } = Dimensions.get("window");
 
 export default function InvoiceInfo({ route, ...props }) {
   const serviceSlice = useSelector((state) => state.services);
   const { selectedServiceImage, selectedServiceName } = serviceSlice;
-  const [invoice, setinvoice] = useState(null);
+  const [invoice, setInvoice] = useState(null);
+  const [errorMsg, setErrorMsg] = useState("");
   const { invoiceId } = route.params;
   const navigation = useNavigation();
 
-  useEffect(() => {
-    // check invoice info
-    console.log(invoiceId);
-  }, []);
+  const loadInvoiceData = () => {
+    axios
+      .get("https://jsonplaceholder.typicode.com/todos/1")
+      .then((res) => {
+        if (res.data) {
+          setInvoice(res.data);
+        } else {
+          setInvoice(null);
+          setErrorMsg(res.data.title);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        setInvoice(null);
+        setErrorMsg("Invalid Invoice ID");
+      });
+  };
 
-  const navigateToOtp=()=>{
-    navigation.navigate("otp");
-  }
+  useEffect(() => {
+    loadInvoiceData();
+  }, [invoiceId]);
+
+  const navigateToOtp = () => {
+    navigation.navigate("otp", { invoice });
+  };
+
+  const navigateInvoiceSelect = () => {
+    navigation.navigate("Invoice");
+  };
 
   return (
     <Surface style={{ flex: 1 }}>
@@ -36,26 +59,37 @@ export default function InvoiceInfo({ route, ...props }) {
         <Text style={styles.title}>{selectedServiceName}</Text>
       </Surface>
       <Surface style={styles.formContainer}>
-        {/* <Text style={styles.text}>
-          la facture est deja payer verifier votre historique
-        </Text> */}
-        <Surface style={styles.textsContainer}>
-          <Text>Taux de facture</Text> 
-          <Text style={styles.textBold}>340DH</Text>
-        </Surface>
-        <Surface style={styles.textsContainer}>
-          <Text>Taux de TVA</Text> 
-          <Text style={styles.textBold}>0DH</Text>
-        </Surface>
-        <Surface style={[styles.textsContainer,styles.divider]}>
-          <Text>Total à payer</Text> 
-          <Text style={styles.textBold}>340DH</Text>
-        </Surface>
+        {errorMsg != "" ? <Text>{errorMsg}</Text> : null}
+        {invoice && (
+          <>
+            <Surface style={styles.textsContainer}>
+              <Text>Taux de facture</Text>
+              <Text style={styles.textBold}>340DH</Text>
+            </Surface>
+            <Surface style={styles.textsContainer}>
+              <Text>Taux de TVA</Text>
+              <Text style={styles.textBold}>0DH</Text>
+            </Surface>
+            <Surface style={[styles.textsContainer, styles.divider]}>
+              <Text>Total à payer</Text>
+              <Text style={styles.textBold}>340DH</Text>
+            </Surface>
+          </>
+        )}
 
-        {invoiceId ? (
-          <ContainedButton elevation={1}  onPress={navigateToOtp} style={styles.button} text={"Suivant"} />
+        {invoice ? (
+          <ContainedButton
+            elevation={1}
+            onPress={navigateToOtp}
+            style={styles.button}
+            text={"Suivant"}
+          />
         ) : (
-          <ContainedButton style={styles.button} text={"Retour"} />
+          <ContainedButton
+            onPress={navigateInvoiceSelect}
+            style={styles.button}
+            text={"Retour"}
+          />
         )}
       </Surface>
     </Surface>
@@ -74,18 +108,18 @@ const styles = StyleSheet.create({
   text: {
     width: "85%",
   },
-  divider:{
-    borderTopWidth:1,
-    paddingTop:10,
-    borderTopColor:"lightgray",
+  divider: {
+    borderTopWidth: 1,
+    paddingTop: 10,
+    borderTopColor: "lightgray",
   },
   textBold: {
-    fontWeight:"bold"
+    fontWeight: "bold",
   },
   textsContainer: {
-    marginBottom:10,
-    flexDirection:"row",
-    justifyContent: 'space-between',
+    marginBottom: 10,
+    flexDirection: "row",
+    justifyContent: "space-between",
     width: "85%",
   },
   title: {

@@ -4,6 +4,7 @@ import { StyleSheet, Dimensions, Image, ScrollView } from "react-native";
 import { Surface, Text, TextInput } from "react-native-paper";
 import Header from "./../../components/common/Header";
 import ContainedButton from "./../../components/buttons/ContainedButton";
+import { useNavigation } from "@react-navigation/native";
 
 const { width } = Dimensions.get("window");
 
@@ -11,6 +12,11 @@ export default function InvoiceSelectionScreen() {
   const serviceSlice = useSelector((state) => state.services);
   const { selectedServiceImage, selectedServiceName } = serviceSlice;
   const [invoiceID, setInvoiceID] = useState("");
+  const navigation=useNavigation();
+
+  const navigateToInvoiceInfo=()=>{
+    navigation.navigate("InvoiceInfo",{invoiceID});
+  }
 
   return (
     <Surface style={{ flex: 1 }}>
@@ -32,7 +38,7 @@ export default function InvoiceSelectionScreen() {
           autoFocus
           onChangeText={(text) => setInvoiceID(text)}
         />
-        <ContainedButton style={styles.button} text={"Suivant"} />
+        <ContainedButton onPress={navigateToInvoiceInfo} style={styles.button} text={"Suivant"} />
       </Surface>
       {/* <ScrollView>
                 <InvoiceCardList />
