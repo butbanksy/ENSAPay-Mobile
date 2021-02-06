@@ -17,7 +17,8 @@ const ServiceCard = ({ invoiceType, image, name }) => {
     if (invoiceType === "recharge") {
       navigation.navigate("Phone");
     } else {
-      navigation.navigate("Invoice");
+      //navigation.navigate("Invoice");
+      navigation.navigate("InvoiceInfo",{invoiceId:123});
     }
   };
 
