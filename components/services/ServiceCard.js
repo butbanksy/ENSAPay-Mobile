@@ -4,7 +4,6 @@ import { Image, StyleSheet, Dimensions, TouchableOpacity } from "react-native";
 import { Text, Surface, Card } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 import { selectService } from "../../utils/servicesApi";
-import MobilePaymentStack from "../../navigation/stacks/MobilePaymentStack";
 
 const { width, height } = Dimensions.get("window");
 
